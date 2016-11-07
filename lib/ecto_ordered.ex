@@ -195,7 +195,7 @@ defmodule EctoOrdered do
   end
 
   defp update_max(%Order{repo: repo} = struct, cs) do
-    rows = query(struct, cs) |> repo.all
+    rows = query(struct, cs) |> repo.all |> Enum.reject(&is_nil/1)
     max = (rows == [] && 0) || Enum.max(rows)
     %{struct|max: max}
   end
